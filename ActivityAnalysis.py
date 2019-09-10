@@ -41,20 +41,20 @@ def DailyAnalysis():
 
         with matplotlib.backends.backend_pdf.PdfPages("DailyAnalysis" + str(date) +".pdf") as pdf:
             temp = dateData.groupby(["Activity Name"])["Time spent in seconds"].sum()
-            plt.figure(figsize=(10,6))
-            sns.barplot(x=temp.index.values,y=temp.values)
+            plt.figure(figsize=(20,6))
+            sns.barplot(y=temp.index.values,x=temp.values)
             plt.title("Total time spent in different Activities")
-            plt.xlabel("Activity Names")
-            plt.ylabel("Time spent in seconds")
+            plt.ylabel("Activity Names")
+            plt.xlabel("Time spent in seconds")
             pdf.savefig()
             plt.close()
 
             temp = dateData[dateData["isWebBrowser"]==1].groupby(["Website"])["Time spent in seconds"].sum()
-            plt.figure(figsize=(10,6))
-            sns.barplot(x=temp.index.values,y=temp.values)
+            plt.figure(figsize=(20,6))
+            sns.barplot(y=temp.index.values,x=temp.values)
             plt.title("Total time spent in different Websites")
-            plt.xlabel("Website Names")
-            plt.ylabel("Time spent in seconds")
+            plt.ylabel("Website Names")
+            plt.xlabel("Time spent in seconds")
             pdf.savefig()
             plt.close()
             
