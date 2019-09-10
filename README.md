@@ -16,4 +16,6 @@ It will store all the activities in a *.csv* file for the later analysis
 ### Features to be added
 * All platforms support
 * Website activities tracking of all Browsers
-* More detailed Analysis of the data 
+* More detailed Analysis of the data  
+  
+*(open for any kind of suggestions)*
