@@ -47,17 +47,9 @@ def setDataFile():
 
 
 def writeData(todayDate,activityName,isWebBrowser,website,startTime,endTime):
-    flag = ifFileExists()
-    if flag:
-        flag = not os.stat("ActivityData.csv").st_size == 0
-
+    setDataFile()
     with open('ActivityData.csv','a',newline="") as data:
         writer = csv.writer(data)
-        if not flag:
-            print("Initializing the file to store data....")
-            writer.writerow(["Date","Activity Name","isWebBrowser","Website","Start Time","End Time","Total Time(h:m:s)"])
-            time.sleep(2)
-            print("Initialization done in ActivityData.csv")
         writer.writerow([todayDate,activityName,isWebBrowser,website,startTime,endTime,(endTime-startTime)])
 
 
