@@ -9,18 +9,22 @@ import csv
 def getCurrentActivity():
     win = win32gui.GetForegroundWindow()
     fullName = str(win32gui.GetWindowText(win))
-    end = datetime.datetime.now()
+    if "https://" in fullName or "http://" in fullName:
+        fullName = "Pop-up Window"
     activityName = fullName.split(' - ')[-1]
 
     return win,activityName,fullName
 
 
 def getWebsite(win):
-    control = auto.ControlFromHandle(win)
-    edit = control.EditControl()
-    # print(edit.GetValuePattern().Value)
-    website = str(edit.GetValuePattern().Value).split('/')[0]
-
+    try:
+        control = auto.ControlFromHandle(win)
+        edit = control.EditControl()
+        # print(edit.GetValuePattern().Value)
+        website = str(edit.GetValuePattern().Value).split('/')[0]
+    except:
+        website = "-"
+    
     return website
 
 
@@ -30,7 +34,9 @@ def ifFileExists():
 
 def setDataFile():
     flag = ifFileExists()
-    #print(flag)
+    if flag:
+        flag = not os.stat("ActivityData.csv").st_size == 0
+
     with open('ActivityData.csv','a',newline="") as data:
         writer = csv.writer(data)
         if not flag:
@@ -42,6 +48,8 @@ def setDataFile():
 
 def writeData(todayDate,activityName,isWebBrowser,website,startTime,endTime):
     flag = ifFileExists()
+    if flag:
+        flag = not os.stat("ActivityData.csv").st_size == 0
 
     with open('ActivityData.csv','a',newline="") as data:
         writer = csv.writer(data)
@@ -109,4 +117,5 @@ if __name__ == "__main__":
                 continue
         except UnicodeEncodeError:
             last_activity = ""
+            startTime = endTime
             continue
