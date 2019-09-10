@@ -1,4 +1,6 @@
 # Activity-Tracker
+[![BCH compliance](https://bettercodehub.com/edge/badge/memr5/Activity-Tracker?branch=master)](https://bettercodehub.com/) 
+---
 Activity Tracker is a **python 🐍 script** to track time spent on desktop applications and websites in real time  
 It will store all the activities in a *.csv* file for the later analysis  
 **ActivityAnalysis.py** will help creating a *.pdf* file to visualize the data collected in .csv file  
