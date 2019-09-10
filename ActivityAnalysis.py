@@ -29,32 +29,32 @@ def DailyAnalysis():
     else:
         # print(dateData.head())
         totalScreenTime = 0
-        totalTimeSeconds = []
+        totalTimeHours = []
         for totalTime in dateData["Total Time(h:m:s)"]:
             h,m,s = totalTime.split(':')
-            totalTimeSeconds.append((int(h)*60+int(m))*60 + float(s))
-            totalScreenTime += (int(h)*60+int(m))*60 + float(s)
+            totalTimeHours.append(((int(h)*60+int(m))*60 + float(s))/3600)
+            totalScreenTime += ((int(h)*60+int(m))*60 + float(s))/3600
         totalScreenTime = math.ceil(totalScreenTime)
-        print("Total Screen Time : " + str(totalScreenTime) + " s")
+        print("Total Screen Time : " + str(totalScreenTime) + " h")
 
-        dateData["Time spent in seconds"] = pd.Series(totalTimeSeconds)
+        dateData["Time spent in hours"] = pd.Series(totalTimeHours)
 
         with matplotlib.backends.backend_pdf.PdfPages("DailyAnalysis" + str(date) +".pdf") as pdf:
-            temp = dateData.groupby(["Activity Name"])["Time spent in seconds"].sum()
+            temp = dateData.groupby(["Activity Name"])["Time spent in hours"].sum()
             plt.figure(figsize=(20,6))
             sns.barplot(y=temp.index.values,x=temp.values)
             plt.title("Total time spent in different Activities")
             plt.ylabel("Activity Names")
-            plt.xlabel("Time spent in seconds")
+            plt.xlabel("Time spent in hours")
             pdf.savefig()
             plt.close()
 
-            temp = dateData[dateData["isWebBrowser"]==1].groupby(["Website"])["Time spent in seconds"].sum()
+            temp = dateData[dateData["isWebBrowser"]==1].groupby(["Website"])["Time spent in hours"].sum()
             plt.figure(figsize=(20,6))
             sns.barplot(y=temp.index.values,x=temp.values)
             plt.title("Total time spent in different Websites")
             plt.ylabel("Website Names")
-            plt.xlabel("Time spent in seconds")
+            plt.xlabel("Time spent in hours")
             pdf.savefig()
             plt.close()
             
